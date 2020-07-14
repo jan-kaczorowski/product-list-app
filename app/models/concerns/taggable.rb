@@ -12,6 +12,6 @@ module Taggable
   end
 
   def tag_titles
-    tags.map(&:title)
+    tags.map(&:title).sort
   end
 end

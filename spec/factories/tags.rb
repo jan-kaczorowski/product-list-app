@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :tag do
-    title { Faker::Marketing.buzzwords }
+    title { Faker::Lorem.unique.word }
   end
 end

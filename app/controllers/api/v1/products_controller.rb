@@ -48,7 +48,8 @@ module Api
 
       def update_params
         params.require(:data)
-              .permit(:type, :id, attributes: [:name, :description, :price, tags: []])
+              .permit(:type, attributes: [:name, :description, :price, tags: []])
+              .merge(params.permit(:id))
       end
 
       def tagger_service

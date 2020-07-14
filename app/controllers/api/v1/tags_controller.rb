@@ -36,7 +36,8 @@ module Api
 
       def update_params
         params.require(:data)
-              .permit(:type, :id, attributes: %i[title])
+              .permit(:type, attributes: %i[title])
+              .merge(params.permit(:id))
       end
     end
   end

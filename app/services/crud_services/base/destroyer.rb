@@ -29,7 +29,7 @@ module CrudServices
       private
 
       def resource
-        Product.find(@id)
+        resource_klass.find(id)
       end
     end
   end

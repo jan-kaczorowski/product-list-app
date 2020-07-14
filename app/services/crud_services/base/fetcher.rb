@@ -2,9 +2,7 @@ require "dry/transaction/operation"
 
 module CrudServices
   module Base
-    class Fetcher
-      include Dry::Transaction::Operation
-
+    class Fetcher < BaseCrudService
       SUCCESS_STATUS = 200
 
       def initialize(resource_klass:, serialized_relationships:)
@@ -20,10 +18,11 @@ module CrudServices
           data: data,
           status: SUCCESS_STATUS
         )
+      rescue *EXPECTED_ERRORS => e
+        raise Errors::ExpectedError, e
       rescue StandardError => e
-        Failure(
-          error: e
-        )
+        # maybe log error to Sentry or sth
+        raise e
       end
     end
   end

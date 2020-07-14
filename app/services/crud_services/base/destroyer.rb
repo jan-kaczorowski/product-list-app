@@ -2,9 +2,7 @@ require "dry/transaction/operation"
 
 module CrudServices
   module Base
-    class Destroyer
-      include Dry::Transaction::Operation
-
+    class Destroyer < BaseCrudService
       SUCCESS_STATUS = 204
 
       def initialize(resource_klass:, id:)
@@ -20,10 +18,11 @@ module CrudServices
           data: {},
           status: SUCCESS_STATUS
         )
+      rescue *EXPECTED_ERRORS => e
+        raise Errors::ExpectedError, e
       rescue StandardError => e
-        Failure(
-          error: e
-        )
+        # maybe log error to Sentry or sth
+        raise e
       end
 
       private

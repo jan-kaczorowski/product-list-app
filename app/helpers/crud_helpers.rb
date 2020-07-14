@@ -59,31 +59,19 @@ module CrudHelpers
   end
 
   def render_resource(result)
-    handle_errors(result)
-    # byebu# g
     render json: result.value![:data],
            serializer: self.class.serializer,
            status: result.value![:status]
   end
 
   def render_deleted_resource(result)
-    handle_errors(result)
-
     render nothing: true, status: result.value![:status]
   end
 
   def render_collection(result)
-    handle_errors(result)
-
     render json: result.value![:data],
            each_serializer: self.class.serializer,
            include: self.class.serialized_relationships,
            status: result.value![:status]
-  end
-
-  def handle_errors(result)
-    return unless result.is_a? Failure
-
-    render json: { error: result.failure[:error].message } and return true
   end
 end

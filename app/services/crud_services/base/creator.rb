@@ -2,9 +2,7 @@ require "dry/transaction/operation"
 
 module CrudServices
   module Base
-    class Creator
-      include Dry::Transaction::Operation
-
+    class Creator < BaseCrudService
       SUCCESS_STATUS = 201
 
       def initialize(resource_klass:, params:)
@@ -21,10 +19,11 @@ module CrudServices
           data: resource,
           status: SUCCESS_STATUS
         )
+      rescue *EXPECTED_ERRORS => e
+        raise Errors::ExpectedError, e
       rescue StandardError => e
-        Failure(
-          error: e
-        )
+        # maybe log error to Sentry or sth
+        raise e
       end
     end
   end

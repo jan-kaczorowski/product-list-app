@@ -20,8 +20,8 @@ RSpec.describe "GET /products", type: :request do
           },
           relationships: {
             tags: {
-              data: product1.tags.sort.map do |tag| 
-                { id: tag.id.to_s, type: "tags" } 
+              data: product1.tags.sort.map do |tag|
+                { id: tag.id.to_s, type: "tags" }
               end
             }
           }
@@ -37,8 +37,8 @@ RSpec.describe "GET /products", type: :request do
           },
           relationships: {
             tags: {
-              data: product2.tags.sort.map do |tag| 
-                { id: tag.id.to_s, type: "tags" } 
+              data: product2.tags.sort.map do |tag|
+                { id: tag.id.to_s, type: "tags" }
               end
             }
           }
@@ -50,7 +50,7 @@ RSpec.describe "GET /products", type: :request do
           type: "tags",
           attributes: {
             title: tag.title
-          },
+          }
         }
       end
     }.deep_stringify_keys

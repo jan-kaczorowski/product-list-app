@@ -2,9 +2,7 @@ require "dry/transaction/operation"
 
 module CrudServices
   module Base
-    class Finder
-      include Dry::Transaction::Operation
-
+    class Finder < BaseCrudService
       SUCCESS_STATUS = 200
 
       def initialize(resource_klass:, id:)
@@ -19,10 +17,11 @@ module CrudServices
           data: resource,
           status: SUCCESS_STATUS
         )
+      rescue *EXPECTED_ERRORS => e
+        raise Errors::ExpectedError, e
       rescue StandardError => e
-        Failure(
-          error: e
-        )
+        # maybe log error to Sentry or sth
+        raise e
       end
 
       private

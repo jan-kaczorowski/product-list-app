@@ -19,6 +19,6 @@ RSpec.describe Product, type: :model do
   end
 
   it "returns tag titles" do
-    expect(subject.tag_titles).to eq(subject.tags.map(&:title))
+    expect(subject.tag_titles).to eq(subject.tags.map(&:title).sort)
   end
 end

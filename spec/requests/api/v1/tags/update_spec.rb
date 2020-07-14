@@ -7,11 +7,11 @@ RSpec.describe "PATCH /tags/:id", type: :request do
   let!(:expected_payload) do
     {
       data: {
-          id: "1",
-          type: "tags",
-          attributes: {
-            title: "Dessert"
-          }
+        id: "1",
+        type: "tags",
+        attributes: {
+          title: "Dessert"
+        }
       }
     }.deep_stringify_keys
   end
@@ -19,7 +19,7 @@ RSpec.describe "PATCH /tags/:id", type: :request do
   context "when API is called with valid params" do
     let!(:params) do
       {
-        data: {	
+        data: {
           type: "tags",
           id: tag.id.to_s,
           attributes: {
@@ -37,21 +37,31 @@ RSpec.describe "PATCH /tags/:id", type: :request do
     end
   end
 
-  context "when params are empty" do
+  context "when id is invalid" do
+    let!(:url) { "/api/v1/tags/invalid-id" }
     let!(:params) do
       {
-        data: {	
+        data: {
+          type: "products",
           attributes: {}
         }
       }
+    end
+    let!(:expected_error_payload) do
+      {
+        data: {
+          error: "ACTIVERECORD.RECORDNOTFOUND",
+          message: "COULDNT.FIND.TAG.WITH.ID=INVALID-ID",
+          status: 404
+        }
+      }.deep_stringify_keys
     end
 
     it "returns an error" do
       patch url, params: params.to_json, headers: json_headers
 
-      expect(response).to have_http_status(422)
-      expect(json_response).to eq(expected_payload)
+      expect(response).to have_http_status(404)
+      expect(json_response).to eq(expected_error_payload)
     end
   end
 end
-

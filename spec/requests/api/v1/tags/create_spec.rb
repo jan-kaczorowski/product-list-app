@@ -6,11 +6,11 @@ RSpec.describe "POST /tags", type: :request do
   let!(:expected_payload) do
     {
       data: {
-          id: "1",
-          type: "tags",
-          attributes: {
-            title: "Appetizer"
-          }
+        id: "1",
+        type: "tags",
+        attributes: {
+          title: "Appetizer"
+        }
       }
     }.deep_stringify_keys
   end
@@ -18,7 +18,7 @@ RSpec.describe "POST /tags", type: :request do
   context "when API is called with valid params" do
     let!(:params) do
       {
-        data: {	
+        data: {
           type: "undefined",
           id: "undefined",
           attributes: {
@@ -40,7 +40,7 @@ RSpec.describe "POST /tags", type: :request do
     let!(:existing_tag) { create(:tag, title: "Appetizer") }
     let!(:params) do
       {
-        data: {	
+        data: {
           type: "undefined",
           id: "undefined",
           attributes: {
@@ -49,30 +49,47 @@ RSpec.describe "POST /tags", type: :request do
         }
       }
     end
+    let!(:expected_error_payload) do
+      {
+        data: {
+          error: "ACTIVERECORD.RECORDINVALID",
+          message: "VALIDATION.FAILED:TITLE.HAS.ALREADY.BEEN.TAKEN",
+          status: 422
+        }
+      }.deep_stringify_keys
+    end
 
     it "returns an error" do
       post url, params: params.to_json, headers: json_headers
 
       expect(response).to have_http_status(422)
-      expect(json_response).to eq(expected_payload)
+      expect(json_response).to eq(expected_error_payload)
     end
   end
 
   context "when params are empty" do
     let!(:params) do
       {
-        data: {	
+        data: {
           attributes: {}
         }
       }
+    end
+    let!(:expected_error_payload) do
+      {
+        data: {
+          error: "ACTIONCONTROLLER.PARAMETERMISSING",
+          message: "PARAM.IS.MISSING.OR.THE.VALUE.IS.EMPTY:ATTRIBUTES",
+          status: 422
+        }
+      }.deep_stringify_keys
     end
 
     it "returns an error" do
       post url, params: params.to_json, headers: json_headers
 
       expect(response).to have_http_status(422)
-      expect(json_response).to eq(expected_payload)
+      expect(json_response).to eq(expected_error_payload)
     end
   end
 end
-

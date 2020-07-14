@@ -15,10 +15,6 @@ module Api
         render_resource finder.call
       end
 
-      def add_tag
-        render_resource tagger_service.call
-      end
-
       def create
         render_resource creator.call
       end
@@ -50,13 +46,6 @@ module Api
         params.require(:data)
               .permit(:type, attributes: [:name, :description, :price, tags: []])
               .merge(params.permit(:id))
-      end
-
-      def tagger_service
-        CrudServices::Products::Tagger.new(
-          id: params[:id],
-          tag_name: params[:data][:attributes][:name]
-        )
       end
     end
   end

@@ -9,7 +9,7 @@ gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
 gem 'sqlite3'
 # Use Puma as the app server
 gem 'active_model_serializers', '~> 0.10.0'
-gem "awesome_print"
+gem 'awesome_print'
 gem 'dry-transaction'
 gem 'puma', '~> 3.11'
 gem 'rubocop', require: false

@@ -1,9 +1,12 @@
-require "dry/transaction/operation"
+# frozen_string_literal: true
+
+require 'dry/transaction/operation'
 
 module CrudServices
   module Products
     class Updater < CrudServices::Base::Updater
       SUCCESS_STATUS = 200
+      MUST_BE_TRANSACTIONAL = true
 
       def initialize(resource_klass:, params:)
         @resource_klass = resource_klass
@@ -11,21 +14,14 @@ module CrudServices
         @attributes = params.delete(:attributes).to_h
       end
 
-      def call
-        ActiveRecord::Base.transaction do
-          process_tag_attributes!
+      def process!
+        process_tag_attributes!
 
-          resource.update!(attributes)
-          Success(
-            data: resource,
-            status: SUCCESS_STATUS
-          )
-        end
-      rescue *EXPECTED_ERRORS => e
-        raise Errors::ExpectedError, e
-      rescue StandardError => e
-        # maybe log error to Sentry or sth
-        raise e
+        resource.update!(attributes)
+        Success(
+          data: resource,
+          status: SUCCESS_STATUS
+        )
       end
 
       private

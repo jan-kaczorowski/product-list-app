@@ -9,7 +9,7 @@ RSpec.describe Product, type: :model do
   it { should have_many :taggables }
   it { should have_many :taggings }
 
-  it "is valid with valid attributes" do
+  it 'is valid with valid attributes' do
     expect(subject).to be_valid
   end
 end

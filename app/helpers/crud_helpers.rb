@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module CrudHelpers
-  include Dry::Monads
-
   module ClassMethods
     def crud_service(crud_module: CrudServices::Base,
                      resource_klass:,

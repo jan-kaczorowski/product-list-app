@@ -14,11 +14,11 @@ RSpec.describe Product, type: :model do
   it { should have_many :tags }
   it { should have_many :taggings }
 
-  it "is valid with valid attributes" do
+  it 'is valid with valid attributes' do
     expect(subject).to be_valid
   end
 
-  it "returns tag titles" do
+  it 'returns tag titles' do
     expect(subject.tag_titles).to eq(subject.tags.map(&:title).sort)
   end
 end

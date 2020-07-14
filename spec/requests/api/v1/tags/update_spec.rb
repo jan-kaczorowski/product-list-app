@@ -1,35 +1,35 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "PATCH /tags/:id", type: :request do
-  let!(:tag) { create(:tag, title: "Appetizer") }
+RSpec.describe 'PATCH /tags/:id', type: :request do
+  let!(:tag) { create(:tag, title: 'Appetizer') }
   let!(:url) { "/api/v1/tags/#{tag.id}" }
 
   let!(:expected_payload) do
     {
       data: {
-        id: "1",
-        type: "tags",
+        id: '1',
+        type: 'tags',
         attributes: {
-          title: "Dessert"
+          title: 'Dessert'
         }
       }
     }.deep_stringify_keys
   end
 
-  context "when API is called with valid params" do
+  context 'when API is called with valid params' do
     let!(:params) do
       {
         data: {
-          type: "tags",
+          type: 'tags',
           id: tag.id.to_s,
           attributes: {
-            title: "Dessert"
+            title: 'Dessert'
           }
         }
       }
     end
 
-    it "updates a tag" do
+    it 'updates a tag' do
       patch url, params: params.to_json, headers: json_headers
 
       expect(response).to have_http_status(200)
@@ -37,12 +37,12 @@ RSpec.describe "PATCH /tags/:id", type: :request do
     end
   end
 
-  context "when id is invalid" do
-    let!(:url) { "/api/v1/tags/invalid-id" }
+  context 'when id is invalid' do
+    let!(:url) { '/api/v1/tags/invalid-id' }
     let!(:params) do
       {
         data: {
-          type: "products",
+          type: 'products',
           attributes: {}
         }
       }
@@ -50,14 +50,14 @@ RSpec.describe "PATCH /tags/:id", type: :request do
     let!(:expected_error_payload) do
       {
         data: {
-          error: "ACTIVERECORD.RECORDNOTFOUND",
-          message: "COULDNT.FIND.TAG.WITH.ID=INVALID-ID",
+          error: 'ACTIVERECORD.RECORDNOTFOUND',
+          message: 'COULDNT.FIND.TAG.WITH.ID=INVALID-ID',
           status: 404
         }
       }.deep_stringify_keys
     end
 
-    it "returns an error" do
+    it 'returns an error' do
       patch url, params: params.to_json, headers: json_headers
 
       expect(response).to have_http_status(404)

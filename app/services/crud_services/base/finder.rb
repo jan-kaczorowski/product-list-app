@@ -1,4 +1,6 @@
-require "dry/transaction/operation"
+# frozen_string_literal: true
+
+require 'dry/transaction/operation'
 
 module CrudServices
   module Base
@@ -12,16 +14,11 @@ module CrudServices
 
       attr_reader :id, :resource_klass
 
-      def call
+      def process!
         Success(
           data: resource,
           status: SUCCESS_STATUS
         )
-      rescue *EXPECTED_ERRORS => e
-        raise Errors::ExpectedError, e
-      rescue StandardError => e
-        # maybe log error to Sentry or sth
-        raise e
       end
 
       private

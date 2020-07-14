@@ -1,11 +1,20 @@
 # README
 
-## Running this whole thing
+## Running this whole thing for Postman testing
 
 ```
-rails db:seed CLEAR_DB=1; rails s
+
+rails db:seed CLEAR_DB=1
+rspec spec
+rails s
 ```
 
+## If i had more time I would....
+
+- [ ] introduce validation of requests and responses against JsonSchema
+- [ ] improve error handling to have nice, structurized, uniformed errors convenient for frontend use
+- [ ] abstracted CRUD services
+- [ ] add tests for CRUD services
 
 
 

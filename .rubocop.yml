@@ -51,7 +51,8 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/StringLiterals:
-  Enabled: false
+  Enabled: true
+  EnforcedStyle: single_quotes
 
 Naming/MethodParameterName:
   MinNameLength: 2

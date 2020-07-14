@@ -1,24 +1,23 @@
-
 require "dry/transaction/operation"
 
 module CrudServices
-  module Products
-    class Updater
+  module Base
+    class Destroyer
       include Dry::Transaction::Operation
 
-      SUCCESS_STATUS = 200
+      SUCCESS_STATUS = 204
 
-      def initialize(params)
-        @id = params.delete(:id)
-        @attributes = params.delete(:attributes)
+      def initialize(resource_klass:, id:)
+        @resource_klass = resource_klass
+        @id = id
       end
 
-      attr_reader :params, :id, :attributes
+      attr_reader :resource_klass, :id
 
       def call
-        resource.update!(attributes)
+        resource.destroy!
         Success(
-          data: resource,
+          data: {},
           status: SUCCESS_STATUS
         )
       rescue StandardError => e
@@ -28,7 +27,7 @@ module CrudServices
       end
 
       def resource
-        Product.find(id)
+        Product.find(@id)
       end
     end
   end

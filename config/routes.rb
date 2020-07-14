@@ -3,7 +3,13 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :products, except: %i[show]
+      resources :products do
+        member do
+          post :add_tag
+        end
+      end
+      
+      resources :tags
     end
   end
 end

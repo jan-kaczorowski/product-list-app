@@ -2,11 +2,21 @@ module Api
   module V1
     class ProductsController < ApplicationController
       include CrudHelpers
-      
-      CRUD_MODULE = CrudServices::Products
+
+      crud_service resource_klass: Product,
+                   serializer: ProductSerializer,
+                   serialized_relationships: %i[tags taggings]
       
       def index
         render_collection fetcher.call
+      end
+
+      def show
+        render_resource finder.call
+      end
+
+      def add_tag
+        render_resource tagger_service.call
       end
 
       def create
@@ -23,10 +33,6 @@ module Api
 
       private
 
-      def resource_serializer
-        ProductSerializer
-      end
-
       def create_params
         params.require(:data)
               .require(:attributes)
@@ -36,6 +42,13 @@ module Api
       def update_params
         params.require(:data)
               .permit(:type, :id, attributes: %i[name description price])
+      end
+
+      def tagger_service
+        CrudServices::Products::Tagger.new(
+          id: params[:id],
+          tag_name: params[:data][:attributes][:name]
+        )
       end
     end
   end

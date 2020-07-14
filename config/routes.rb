@@ -8,7 +8,7 @@ Rails.application.routes.draw do
           post :add_tag
         end
       end
-      
+
       resources :tags
     end
   end

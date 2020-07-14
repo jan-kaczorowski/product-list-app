@@ -5,7 +5,7 @@ module Api
 
       crud_service resource_klass: Tag,
                    serializer: TagSerializer
-      
+
       def index
         render_collection fetcher.call
       end
@@ -30,11 +30,14 @@ module Api
 
       def create_params
         params.require(:data)
-              .permit(:type, :id, attributes: %i[name description price])
+              .require(:attributes)
+              .permit(%i[title])
       end
 
-      alias update_params create_params
-
+      def update_params
+        params.require(:data)
+              .permit(:type, :id, attributes: %i[title])
+      end
     end
   end
 end

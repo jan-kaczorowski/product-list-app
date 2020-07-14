@@ -1,4 +1,3 @@
-
 require "dry/transaction/operation"
 
 module CrudServices
@@ -16,7 +15,7 @@ module CrudServices
       attr_reader :id, :tag_name
 
       def call
-        resource.tag!(tag_name)
+        resource.add_tag!(tag_name)
         Success(
           data: resource,
           status: SUCCESS_STATUS

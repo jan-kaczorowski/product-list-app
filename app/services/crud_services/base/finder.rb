@@ -1,4 +1,3 @@
-
 require "dry/transaction/operation"
 
 module CrudServices
@@ -26,10 +25,11 @@ module CrudServices
         )
       end
 
+      private
+
       def resource
         resource_klass.find(id)
       end
     end
   end
 end
-

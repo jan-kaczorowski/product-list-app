@@ -10,13 +10,13 @@ module CrudServices
       def initialize(resource_klass:, params:)
         @resource_klass = resource_klass
         @params = params
-        @attributes = params.delete(:attributes)
       end
 
-      attr_reader :resource_klass, :params, :attributes
+      attr_reader :resource_klass, :params
 
       def call
-        resource = resource_klass.create!(attributes)
+        resource = resource_klass.create!(params)
+
         Success(
           data: resource,
           status: SUCCESS_STATUS

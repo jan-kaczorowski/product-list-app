@@ -26,6 +26,8 @@ module CrudServices
         )
       end
 
+      private
+
       def resource
         Product.find(@id)
       end

@@ -60,7 +60,7 @@ module CrudHelpers
 
   def render_resource(result)
     handle_errors(result)
-    #byebu# g
+    # byebu# g
     render json: result.value![:data],
            serializer: self.class.serializer,
            status: result.value![:status]

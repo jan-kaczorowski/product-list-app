@@ -15,10 +15,10 @@ end
 
 Tag.create!(
   [
-    { id: 1, name: "Cool" },
-    { id: 2, name: "Refreshing" },
-    { id: 3, name: "Classy" },
-    { id: 4, name: "Imported" }
+    { id: 1, title: "Soft Drink" },
+    { id: 2, title: "Beverage" },
+    { id: 3, title: "Calorie Free" },
+    { id: 4, title: "Cuban" }
   ]
 )
 

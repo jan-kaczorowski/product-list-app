@@ -3,15 +3,15 @@ module Taggable
 
   included do
     has_many :taggings, as: :taggable, dependent: :destroy
-    has_many :tags, through: :taggings 
+    has_many :tags, through: :taggings
   end
 
-  def tag!(name)
-    tag = Tag.find_or_create_by!(name: name.strip)
+  def tag!(title)
+    tag = Tag.find_or_create_by!(title: title.strip)
     taggings.find_or_create_by!(tag_id: tag.id)
   end
 
-  def tag_names
-    tags.map(&:name)
+  def tag_titles
+    tags.map(&:title)
   end
 end

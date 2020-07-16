@@ -1,0 +1,604 @@
+{
+	"info": {
+		"_postman_id": "76017726-72eb-4f87-ac67-f60981328aab",
+		"name": "Interview Postman tests",
+		"description": "Set of actions prepared for RoR Backend candidates to complete the coding task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Products Index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c73652d-2d5a-44ce-97ef-7b4990638b72",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Existing Name check\"] = jsonData.data[0].attributes.name === \"Coke\";",
+									"tests[\"Existing Description check\"] = jsonData.data[0].attributes.description === \"12 Oz Bottle\";",
+									"tests[\"Existing Price check\"] = jsonData.data[0].attributes.price === \"1.99\";"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						},
+						"description": "Products Index"
+					},
+					"response": [
+						{
+							"name": "Initial Response Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "max-age=0, private, must-revalidate",
+									"name": "Cache-Control",
+									"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"name": "Content-Type",
+									"description": "The mime type of this content"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"99d05c17b773d3c017512602caa4d14c\"",
+									"name": "ETag",
+									"description": "An identifier for a specific version of a resource, often a message digest"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked",
+									"name": "Transfer-Encoding",
+									"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "ed9da2d8-3d18-4e0d-ba3e-6b84da4c193b",
+									"name": "X-Request-Id",
+									"description": "Custom header"
+								},
+								{
+									"key": "X-Runtime",
+									"value": "0.213865",
+									"name": "X-Runtime",
+									"description": "Custom header"
+								}
+							],
+							"cookie": [],
+							"body": "{\"data\":[{\"id\":\"1\",\"type\":\"products\",\"attributes\":{\"name\":\"Coke\", \"description\":\"24oz Bottle\", \"price\":\"1.98\"},\"relationships\":{\"tags\":{\"data\":[{\"id\":\"1\",\"type\":\"tags\"}]}}}],\"included\":[{\"id\":\"1\",\"type\":\"tags\",\"attributes\":{\"title\":\"Beverage\"},\"relationships\":{\"products\":{\"data\":[{\"id\":\"1\",\"type\":\"products\"}]}}}]}"
+						}
+					]
+				},
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4678d47d-6d75-4a41-a515-1718c79ff231",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Created Name check\"] = jsonData.data.attributes.name === \"Pepsi\";",
+									"tests[\"Created Description check\"] = jsonData.data.attributes.description === \"24oz Bottle\";",
+									"tests[\"Created Price check\"] = jsonData.data.attributes.price === \"1.98\";",
+									"tests[\"ID exists check\"] = jsonData.data.id > 0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":\n\t{\t\"type\":\"undefined\",\n\t\t\"id\":\"undefined\",\n\t\t\"attributes\":{\n\t\t\t\"name\":\"Pepsi\",\n\t\t\t\"description\":\"24oz Bottle\",\n\t\t\t\"price\":\"1.98\"\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Response Example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"data\":\n\t{\t\"type\":\"undefined\",\n\t\t\"id\":\"undefined\",\n\t\t\"attributes\":{\n\t\t\t\"title\":\"Do Homework\"\n\t\t}\n\t}\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"products"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "max-age=0, private, must-revalidate",
+									"name": "Cache-Control",
+									"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"name": "Content-Type",
+									"description": "The mime type of this content"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1724d68d668d4974067ea120ce7a06e4\"",
+									"name": "ETag",
+									"description": "An identifier for a specific version of a resource, often a message digest"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked",
+									"name": "Transfer-Encoding",
+									"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1308fb34-2e93-4799-ba74-ef8693401353",
+									"name": "X-Request-Id",
+									"description": "Custom header"
+								},
+								{
+									"key": "X-Runtime",
+									"value": "0.018786",
+									"name": "X-Runtime",
+									"description": "Custom header"
+								}
+							],
+							"cookie": [],
+							"body": "{\"data\":{\"id\":\"2\",\"type\":\"products\",\"attributes\":{\"name\":\"Sprite\", \"description\":\"24oz Bottle\", \"price\":\"1.98\"},\"relationships\":{\"tags\":{\"data\":[]}}}}"
+						}
+					]
+				},
+				{
+					"name": "Update Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6ae49e3a-b6c1-4ef8-8bdc-f087a9f78234",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Update Name check\"] = jsonData.data.attributes.name === \"Pepsi Zero\";",
+									"tests[\"ID exists check\"] = jsonData.data.id === \"2\";"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":\n\t{\t\"type\":\"products\",\n\t\t\"id\":\"2\",\n\t\t\n\t\t\"attributes\":{\n\t\t\t\"name\":\"Pepsi Zero\"\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/products/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Response Example",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"data\":\n\t{\t\"type\":\"products\",\n\t\t\"id\":\"2\",\n\t\t\n\t\t\"attributes\":{\n\t\t\t\"name\":\"Updated Product Name\"\n\t\t}\n\t}\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/products/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "max-age=0, private, must-revalidate",
+									"name": "Cache-Control",
+									"description": "Tells all caching mechanisms from server to client whether they may cache this object. It is measured in seconds"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8",
+									"name": "Content-Type",
+									"description": "The mime type of this content"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f6dd4bdeebccd3f57a762601de6d5c5f\"",
+									"name": "ETag",
+									"description": "An identifier for a specific version of a resource, often a message digest"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked",
+									"name": "Transfer-Encoding",
+									"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1f2e113a-5320-47d1-b1e8-95c9a12670dd",
+									"name": "X-Request-Id",
+									"description": "Custom header"
+								},
+								{
+									"key": "X-Runtime",
+									"value": "0.015038",
+									"name": "X-Runtime",
+									"description": "Custom header"
+								}
+							],
+							"cookie": [],
+							"body": "{\"data\":{\"id\":\"2\",\"type\":\"products\",\"attributes\":{\"name\":\"Updated Product Name\"},\"relationships\":{\"tags\":{\"data\":[]}}}}"
+						}
+					]
+				},
+				{
+					"name": "Products Index (Expect Tags)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00b38046-20c5-461a-bdd8-534a5ccf4535",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Existing Name check\"] = jsonData.data[0].attributes.name === \"Coke\";",
+									"tests[\"Added Tags check\"] = jsonData.data[0].relationships.tags.data[0].id === \"1\";"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						},
+						"description": "Products Index"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product with Tag (Expect Tags)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3da94bb3-cd10-4314-8b2b-7e2a86db924f",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Updated Name check\"] = jsonData.data.attributes.name === \"Pepsi Zero\";",
+									"tests[\"ID exists check\"] = jsonData.data.id === \"2\";",
+									"tests[\"Added Tags check\"] = jsonData.data.relationships.tags.data[0].id === \"2\";",
+									"tests[\"Added Tags check\"] = jsonData.data.relationships.tags.data[1].id === \"3\";"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":\n\t{\t\"type\":\"products\",\n\t\t\"id\":\"2\",\n\t\t\n\t\t\"attributes\":{\n\t\t\t\"name\":\"Pepsi Zero\",\n\t\t\t\"tags\": [\"Beverage\", \"Calorie Free\"]\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/products/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products Index (Expect Tags)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "216549af-dadc-4352-9568-a4d0c6a40249",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Existing Title check\"] = jsonData.data[0].attributes.name === \"Coke\";",
+									"tests[\"Added Tags check\"] = jsonData.data[0].relationships.tags.data[0].id === \"1\";"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						},
+						"description": "Products Index"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "Tags Index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3426a41c-4ead-4dec-9b2c-188a08a7e5fa",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Existing Title check\"] = jsonData.data[0].attributes.title === \"Soft Drink\";"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "93a75335-4a07-4744-a97c-0ddb8da768c1",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Created Title check\"] = jsonData.data.attributes.title === \"Pasta\";",
+									"tests[\"ID exists check\"] = jsonData.data.id > 0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":\n\t{\t\"type\":\"undefined\",\n\t\t\"id\":\"undefined\",\n\t\t\"attributes\":{\n\t\t\t\"title\":\"Pasta\"\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Tag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33ff3f2e-8686-43a2-8557-10957e412bfe",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Created Title check\"] = jsonData.data.attributes.title === \"Updated Tag Title\";",
+									"tests[\"ID exists check\"] = jsonData.data.id  === \"2\";"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":\n\t{\t\"type\":\"products\",\n\t\t\"id\":\"2\",\n\t\t\n\t\t\"attributes\":{\n\t\t\t\"title\":\"Updated Tag Title\"\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/tags/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tags",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

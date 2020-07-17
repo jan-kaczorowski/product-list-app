@@ -10,7 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_054215) do
+ActiveRecord::Schema.define(version: 2020_07_17_083429) do
+
+  create_table "clients", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "security_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "offer_products", force: :cascade do |t|
+    t.string "type", null: false
+    t.integer "width", null: false
+    t.integer "height", null: false
+    t.integer "length"
+    t.integer "material"
+    t.integer "quantity", null: false
+    t.decimal "calculated_price", precision: 10, scale: 4, null: false
+    t.integer "offer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["offer_id"], name: "index_offer_products_on_offer_id"
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.integer "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_offers_on_client_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "name", null: false

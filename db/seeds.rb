@@ -11,6 +11,12 @@ if ENV['CLEAR_DB'] == "1"
   Tag.delete_all
   Tagging.delete_all
   Product.connection.execute("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME IN ('products', 'tags');")
+  OfferProduct.delete_all
+  Offer.delete_all
+  Client.delete_all
+  Client.connection.execute(
+    "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME IN ('clients', 'offers', 'offer_product');"
+  )
 end
 
 Tag.create!(
@@ -50,6 +56,47 @@ Product.create!(
                    "includes some of the World’s most famous cigars.",
       price: 494.0,
       tag_ids: [3, 4]
+    }
+  ]
+)
+
+Client.create!(
+  [
+    {name: "Good client", security_token: SecureRandom.uuid, id: 1 }
+  ]
+)
+
+Offer.create!(
+  [
+    {
+      id: 1,
+      status: "pending",
+      client_id: 1
+    }
+  ]
+)
+
+OfferProduct.create!(
+  [
+    {
+      id: 1,
+      type: "MailerBox",
+      width: 100,
+      height: 100,
+      length: 50,
+      quantity: 300,
+      calculated_price: 7_500,
+      offer_id: 1
+    },
+    {
+      id: 2,
+      type: "PolyMailer",
+      width: 100,
+      height: 100,
+      material: "transparent",
+      quantity: 300,
+      calculated_price: 15_000,
+      offer_id: 1
     }
   ]
 )

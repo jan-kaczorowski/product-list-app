@@ -1,0 +1,49 @@
+{
+  "title": "v1_products_create",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": ["string", "null"],
+          "enum": [
+            "products",
+            "undefined"
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "price": {
+              "type": "string",
+              "pattern": "^(\\d|\\.)+$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "description",
+            "price"
+          ]
+        }
+        
+      }
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "data": {
+      "$ref": "#/definitions/order/examples/base"
+    }
+  }
+}

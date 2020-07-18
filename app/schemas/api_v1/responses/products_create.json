@@ -1,0 +1,10 @@
+{
+  "title": "v1_products_create",
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/definitions/product"
+    }
+  },
+  "additionalProperties": false
+}

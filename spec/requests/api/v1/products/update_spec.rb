@@ -44,9 +44,9 @@ RSpec.describe 'PATCH /products/:id', type: :request do
 
     it 'updates a product' do
       patch url, params: params.to_json, headers: json_headers
+      product.reload
 
       expect(response).to have_http_status(200)
-      product.reload
       expect(json_response).to eq(expected_payload)
 
       tag_titles = json_response['data']['attributes']['tag_titles']
@@ -66,21 +66,14 @@ RSpec.describe 'PATCH /products/:id', type: :request do
         }
       }
     end
-    let!(:expected_error_payload) do
-      {
-        data: {
-          error: 'ACTIVERECORD.RECORDNOTFOUND',
-          message: 'COULDNT.FIND.PRODUCT.WITH.ID=INVALID-ID',
-          status: 404
-        }
-      }.deep_stringify_keys
-    end
 
     it 'returns an error' do
       patch url, params: params.to_json, headers: json_headers
 
-      expect(response).to have_http_status(404)
-      expect(json_response).to eq(expected_error_payload)
+      expect(response).to have_http_status(422)
+      expect(json_response["data"]["error"]).to eq('JSON_SCHEMA_VALIDATION_ERROR')
+      expect(json_response["data"]["status"]).to eq(422)
+      expect(json_response["data"]["mode"]).to eq("request")
     end
   end
 end

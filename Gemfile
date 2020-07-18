@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.9'
+ruby '2.6.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
@@ -11,6 +11,7 @@ gem 'sqlite3'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'awesome_print'
 gem 'dry-transaction'
+gem 'json-schema'
 gem 'puma', '~> 3.11'
 gem 'rubocop', require: false
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

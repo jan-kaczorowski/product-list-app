@@ -4,6 +4,8 @@ module Api
   module V1
     class ProductsController < ApplicationController
       include CrudHelpers
+      include JsonSchemaValidatorHelper
+      validate_against_schema error_klass: Errors::JsonSchemaError
 
       crud_service resource_klass: Product,
                    serializer: ProductSerializer,

@@ -1,0 +1,62 @@
+{
+  "title": "v1_products_index",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/product"
+      }
+    },
+    "included": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["tags"]
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "data": [
+      {
+        "id": "e9dea690-19cb-45b0-a28e-bb844a15659b",
+        "type": "order",
+        "attributes": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/order/examples/base"
+            }
+          ]
+        },
+        "relationships": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/order/examples/relationships/with-nested-customer"
+            }
+          ]
+        }
+      }
+    ],
+    "meta": {
+      "$ref": "#/definitions/meta/examples/base"
+    }
+  }
+}

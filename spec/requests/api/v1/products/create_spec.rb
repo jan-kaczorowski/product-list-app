@@ -32,7 +32,7 @@ RSpec.describe 'POST /products', type: :request do
           attributes: {
             name: 'Veuve Clicquot Ponsardin Brut 0.75 l.',
             description: 'Champagne',
-            price: 75.0
+            price: "75.0"
           }
         }
       }
@@ -56,7 +56,7 @@ RSpec.describe 'POST /products', type: :request do
           attributes: {
             name: 'Champagne',
             description: 'Champagne',
-            price: 75.0
+            price: "75.0"
           }
         }
       }
@@ -87,21 +87,17 @@ RSpec.describe 'POST /products', type: :request do
         }
       }
     end
-    let!(:expected_error_payload) do
-      {
-        data: {
-          error: 'ACTIONCONTROLLER.PARAMETERMISSING',
-          message: 'PARAM.IS.MISSING.OR.THE.VALUE.IS.EMPTY:ATTRIBUTES',
-          status: 422
-        }
-      }.deep_stringify_keys
-    end
 
     it 'returns an error' do
       post url, params: params.to_json, headers: json_headers
 
       expect(response).to have_http_status(422)
-      expect(json_response).to eq(expected_error_payload)
+      expect(json_response["data"]["error"]).to eq('JSON_SCHEMA_VALIDATION_ERROR')
+      expect(json_response["data"]["status"]).to eq(422)
+      expect(json_response["data"]["mode"]).to eq("request")
+      expect(json_response["data"]["message"].first).to include(
+        "The property '#/data/attributes' did not contain a required property of 'name' in schema"
+      )
     end
   end
 
@@ -109,8 +105,8 @@ RSpec.describe 'POST /products', type: :request do
     let!(:params) do
       {
         data: {
-          name: 'Champagne',
-          description: 'Champagne',
+          type: 'undefined',
+          id: 'undefined',
           attributes: {
             name: 'Champagne',
             description: 'Champagne',
@@ -119,21 +115,14 @@ RSpec.describe 'POST /products', type: :request do
         }
       }
     end
-    let!(:expected_error_payload) do
-      {
-        data: {
-          error: 'ACTIVERECORD.RECORDINVALID',
-          message: 'VALIDATION.FAILED:PRICE.IS.NOT.A.NUMBER',
-          status: 422
-        }
-      }.deep_stringify_keys
-    end
 
     it 'returns an error' do
       post url, params: params.to_json, headers: json_headers
 
       expect(response).to have_http_status(422)
-      expect(json_response).to eq(expected_error_payload)
+      expect(json_response["data"]["error"]).to eq('JSON_SCHEMA_VALIDATION_ERROR')
+      expect(json_response["data"]["status"]).to eq(422)
+      expect(json_response["data"]["mode"]).to eq("request")
     end
   end
 end

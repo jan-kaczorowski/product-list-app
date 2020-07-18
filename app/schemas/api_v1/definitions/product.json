@@ -1,0 +1,99 @@
+{
+  "title": "Products",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "products"
+      ]
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string",
+          "pattern": "^(\\d|\\.)+$"
+        },
+        "tag_titles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "relationships": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "tags"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "description",
+        "price",
+        "tag_titles"
+      ]
+    }
+  },
+  "examples": {
+    "base": {
+      "id": "4",
+      "type": "products",
+      "attributes": {
+        "name": "Montecristo No.1. Box of 25 pcs.",
+        "description": "The Montecristo No.1 is the largest of the Montecristo numbered series, which includes some of the World’s most famous cigars.",
+        "price": "494.0",
+        "tag_titles": [
+          "Calorie Free",
+          "Cuban"
+        ]
+      },
+      "relationships": {
+        "tags": {
+          "data": [
+            {
+              "id": "3",
+              "type": "tags"
+            },
+            {
+              "id": "4",
+              "type": "tags"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

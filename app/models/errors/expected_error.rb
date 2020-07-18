@@ -14,7 +14,7 @@ module Errors
 
     attr_reader :error
 
-    def message_as_json
+    def json_message
       {
         data: {
           error: error.class.name.upcase.gsub('::', '.'),

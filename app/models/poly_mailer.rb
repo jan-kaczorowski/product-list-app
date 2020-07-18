@@ -8,14 +8,9 @@ class PolyMailer < OfferProduct
     transparent: 0.15
   }.freeze
 
-  enum material: MATERIALS.keys
+  include QuantityValidation
 
-  validates :quantity,
-            presence: true,
-            numericality: { 
-              greater_than_or_equal_to: MIN_QTY,
-              less_than_or_equal_to: MAX_QTY
-          }
+  enum material: MATERIALS.keys
 
   validates :material,
             presence: true,

@@ -4,12 +4,7 @@ class MailerBox < OfferProduct
   MIN_QTY = 200
   MAX_QTY = 1000
 
-  validates :quantity,
-            presence: true,
-            numericality: { 
-              greater_than_or_equal_to: MIN_QTY,
-              less_than_or_equal_to: MAX_QTY
-          }
+  include QuantityValidation
 
   validates :length,
             presence: true,

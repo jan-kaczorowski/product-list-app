@@ -9,12 +9,14 @@ class OfferBuilder
   attr_reader :params, :offer, :products
 
   def call
-    create_offer
+    ActiveRecord::Base.transaction do
+      create_offer
 
-    process_products
+      process_products
 
-    offer.offer_products = products
-    offer.save!
+      offer.offer_products = products
+      offer.save!
+    end
   rescue StandardError => e
     # that'd be the place for some proper error handling
     delete_offer # cleanup
@@ -26,11 +28,9 @@ class OfferBuilder
   def process_products
     products_params = params[:products]
 
-    ActiveRecord::Base.transaction do
-      products_params.each do |product_params|
-        product = OfferProductBuilder.new(product_params, offer).call
-        @products.push(product)
-      end
+    products_params.each do |product_params|
+      product = OfferProductBuilder.new(product_params, offer).call
+      @products.push(product)
     end
   end
 
@@ -42,6 +42,8 @@ class OfferBuilder
   end
 
   def delete_offer
+    return if offer.nil?
+
     offer.destroy
   end
 end

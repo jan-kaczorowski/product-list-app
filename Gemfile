@@ -12,7 +12,7 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'awesome_print'
 gem 'dry-transaction'
 gem 'json-schema'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 gem 'rubocop', require: false
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
